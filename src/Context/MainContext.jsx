@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 const MainContext = createContext();
 
 export const MainProvider = ({ children }) => {
+  //VARIBALES
   const [isLogin, setIsLogin] = useState(false);
-  const [edad, setEdad] = useState(0);
   const [suma, setSuma] = useState(0);
 
+  //LOGICA
   const sumar = (a, b) => {
     a = parseInt(a);
     b = parseInt(b);
@@ -21,13 +22,12 @@ export const MainProvider = ({ children }) => {
     }
   }, [isLogin]);
 
+  //RETURN
   return (
     <MainContext.Provider
       value={{
         isLogin,
         setIsLogin,
-        edad,
-        setEdad,
         suma,
         //FUNCIONES
         sumar,
