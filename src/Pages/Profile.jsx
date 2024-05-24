@@ -3,9 +3,10 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainContext from "../Context/MainContext";
 import MainLayout from "../Layouts/MainLayout";
+import ListadoRutas from "./ListadoRutas";
 
 const Profile = () => {
-  const { sumar, suma, isLogin } = useContext(MainContext);
+  const { sumar, suma, isLogin, userRutas } = useContext(MainContext);
 
   const [num1, setnum1] = useState(0);
   const [num2, setnum2] = useState(0);
@@ -38,6 +39,7 @@ const Profile = () => {
           </button>
           {(suma !== 0 || suma !== null) && <p>Resultado: {suma}</p>}
         </div>
+        {userRutas ? <ListadoRutas rutas={userRutas} /> : <h1>No hay permisos</h1>}
       </MainLayout>
     );
   } else {

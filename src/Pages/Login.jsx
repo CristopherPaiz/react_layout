@@ -1,18 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import MainLayout from "../Layouts/MainLayout";
 import MainContext from "../Context/MainContext";
 import { Link } from "react-router-dom";
-// import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { isLogin, setIsLogin } = useContext(MainContext);
 
-  //create useNavigate
-  //   const navigate = useNavigate();
+  // crear useNavigate
+  const navigate = useNavigate();
+
+  // mover la lógica de navegación a un efecto secundario
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/");
+    }
+  }, [isLogin, navigate]);
 
   //hacer algo si login usando UseContext
   if (isLogin) {
-    // navigate("/");
     return (
       <>
         <h1 className="mb-5">Ya estas logueado</h1>
