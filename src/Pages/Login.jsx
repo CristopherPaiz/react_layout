@@ -1,19 +1,21 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import MainLayout from "../Layouts/MainLayout";
 import MainContext from "../Context/MainContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { isLogin, setIsLogin } = useContext(MainContext);
+  const { isLogin, setIsLogin, setActiveuser } = useContext(MainContext);
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
 
   // crear useNavigate
   const navigate = useNavigate();
 
-  // mover la lógica de navegación a un efecto secundario
+  // Redirigir si ya está logueado
   useEffect(() => {
     if (isLogin) {
-      navigate("/");
+      navigate("/profile");
     }
   }, [isLogin, navigate]);
 
@@ -22,15 +24,23 @@ const Login = () => {
     return (
       <>
         <h1 className="mb-5">Ya estas logueado</h1>
-        <Link className="bg-blue-400 text-white py-2 px-5 rounded-lg mr-3" to={"/"}>
+        <Link className="bbn" to={"/"}>
           Ve al inicio
         </Link>
-        <Link onClick={() => setIsLogin(false)} to={"/"} className="bg-red-500 text-white py-2 px-5 rounded-lg">
+        <Link onClick={() => setIsLogin(false)} to={"/"} className="brn">
           Cerrar sesión
         </Link>
       </>
     );
   }
+
+  //Manejar el Login
+  const handleLogin = () => {
+    if (user !== "" && pass !== "") {
+      setActiveuser(user);
+      setIsLogin(true);
+    }
+  };
 
   //Si no está login pues muestra el login
   return (
@@ -51,6 +61,9 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
+                    autoComplete="off"
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="nombre@empresa.com"
@@ -64,6 +77,8 @@ const Login = () => {
                   <input
                     type="password"
                     name="password"
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
                     id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
@@ -91,7 +106,7 @@ const Login = () => {
                   </span>
                 </div>
                 <button
-                  onClick={() => setIsLogin(true)}
+                  onClick={handleLogin}
                   className="w-full text-white bg-gray-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Iniciar Sesión

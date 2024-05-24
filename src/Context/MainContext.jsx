@@ -6,6 +6,7 @@ const MainContext = createContext();
 export const MainProvider = ({ children }) => {
   //VARIBALES
   const [isLogin, setIsLogin] = useState(false);
+  const [activeUser, setActiveuser] = useState("0");
   const [suma, setSuma] = useState(0);
   const [userRutas, setUserRutas] = useState([]);
 
@@ -49,8 +50,8 @@ export const MainProvider = ({ children }) => {
 
   //Se llama a la función rutasAJson y se le pasa el array de rutas
   useEffect(() => {
-    //cuando el user login
-    if (isLogin) {
+    //cuando el user login y usuario 1
+    if (activeUser == "1") {
       let USUARIO1 = [
         "gerencia/asignacion_horario/listado",
         "banco/bancoSpirit/add",
@@ -60,36 +61,41 @@ export const MainProvider = ({ children }) => {
         "contabilidad/rrhh/update",
         "contabilidad/monitoreo/add",
       ];
-
-      // let USUARIO2 = ["contabilidad/rrhh/add", "contabilidad/rrhh/update", "contabilidad/nominas/add"];
-
-      // let USUARIO3 = [
-      //   "gerencia/asignacion_horario/add",
-      //   "gerencia/asignacion_horario/listado",
-      //   "gerencia/asignacion_horario/update",
-      //   "banco/bancoSpirit/add",
-      //   "banco/bancoSpirit/delete",
-      //   "banco/bancoSpirit/update",
-      //   "banco/listado/drop",
-      //   "banco/listado/add",
-      //   "banco/listado/delete",
-      //   "banco/listado/update",
-      //   "contabilidad/rrhh/add",
-      //   "contabilidad/rrhh/update",
-      //   "contabilidad/rrhh/delete",
-      //   "contabilidad/monitoreo/add",
-      //   "contabilidad/monitoreo/delete",
-      //   "contabilidad/monitoreo/update",
-      //   "contabilidad/nominas/add",
-      //   "contabilidad/nominas/delete",
-      //   "contabilidad/nominas/update",
-      // ];
-
       setUserRutas(JSON.parse(rutasAJson(USUARIO1)));
-    } else {
-      setUserRutas([]);
     }
-  }, [isLogin]);
+
+    //cuando el user login y usuario 2
+    if (activeUser == "2") {
+      let USUARIO2 = ["contabilidad/rrhh/add", "contabilidad/rrhh/update", "contabilidad/nominas/add"];
+      setUserRutas(JSON.parse(rutasAJson(USUARIO2)));
+    }
+
+    //cuando el user login y usuario 3
+    if (activeUser == "3") {
+      let USUARIO3 = [
+        "gerencia/asignacion_horario/add",
+        "gerencia/asignacion_horario/listado",
+        "gerencia/asignacion_horario/update",
+        "banco/bancoSpirit/add",
+        "banco/bancoSpirit/delete",
+        "banco/bancoSpirit/update",
+        "banco/listado/drop",
+        "banco/listado/add",
+        "banco/listado/delete",
+        "banco/listado/update",
+        "contabilidad/rrhh/add",
+        "contabilidad/rrhh/update",
+        "contabilidad/rrhh/delete",
+        "contabilidad/monitoreo/add",
+        "contabilidad/monitoreo/delete",
+        "contabilidad/monitoreo/update",
+        "contabilidad/nominas/add",
+        "contabilidad/nominas/delete",
+        "contabilidad/nominas/update",
+      ];
+      setUserRutas(JSON.parse(rutasAJson(USUARIO3)));
+    }
+  }, [activeUser]);
 
   //RETURN
   return (
@@ -99,6 +105,8 @@ export const MainProvider = ({ children }) => {
         setIsLogin,
         suma,
         userRutas,
+        setActiveuser,
+        activeUser,
         //FUNCIONES
         sumar,
       }}

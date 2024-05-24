@@ -5,7 +5,7 @@ import Listado from "./Components/Listado";
 const MainBancos = ({ permisos }) => {
   return (
     <>
-      <h1 className="text-2xl font-bold">MainBancos</h1>
+      <h1 className="th1">MainBancos</h1>
       {permisos?.bancoSpirit && <BancoSpirit permisos={permisos.bancoSpirit} />}
       {permisos?.listado && <Listado permisos={permisos.listado} />}
     </>
